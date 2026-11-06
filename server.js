@@ -23,58 +23,65 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf'
 };
 
-function createServer() {
-  return http.createServer((req, res) => {
-    // CORS headers
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    res.setHeader('Cache-Control', 'no-cache');
+function requestHandler(req, res) {
+  // CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Cache-Control', 'no-cache');
 
-    if (req.method === 'OPTIONS') {
-      res.writeHead(204);
-      res.end();
-      return;
-    }
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
 
-    let parsedUrl;
-    try {
-      parsedUrl = new URL(req.url, 'http://localhost');
-    } catch {
-      res.writeHead(400, { 'Content-Type': 'text/plain' });
-      res.end('Bad Request');
-      return;
-    }
+  let parsedUrl;
+  try {
+    parsedUrl = new URL(req.url, 'http://localhost');
+  } catch {
+    res.writeHead(400, { 'Content-Type': 'text/plain' });
+    res.end('Bad Request');
+    return;
+  }
 
-    let reqPath = decodeURI(parsedUrl.pathname);
-    if (reqPath === '/' || reqPath === '') {
-      reqPath = '/index.html';
-    }
+  let reqPath = decodeURI(parsedUrl.pathname);
+  if (reqPath === '/' || reqPath === '') {
+    reqPath = '/index.html';
+  }
 
-    let safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
-    let filePath = path.join(PUBLIC_DIR, safePath);
+  let safePath = path.normalize(reqPath).replace(/^(\.\.[\/\\])+/, '');
+  let filePath = path.join(PUBLIC_DIR, safePath);
 
-    fs.stat(filePath, (err, stats) => {
-      if (err || !stats.isFile()) {
-        // Fallback for directory or 404
-        res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
-        res.end('<h1>404 Not Found</h1><p>The requested file was not found.</p>');
+  fs.stat(filePath, (err, stats) => {
+    if (err || !stats.isFile()) {
+      const indexFallback = path.join(PUBLIC_DIR, 'index.html');
+      if (fs.existsSync(indexFallback)) {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
+        fs.createReadStream(indexFallback).pipe(res);
         return;
       }
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
+      res.end('<h1>404 Not Found</h1><p>The requested file was not found.</p>');
+      return;
+    }
 
-      const ext = path.extname(filePath).toLowerCase();
-      const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-      res.writeHead(200, { 'Content-Type': contentType });
-      const stream = fs.createReadStream(filePath);
-      stream.on('error', () => {
-        if (!res.headersSent) {
-          res.writeHead(500, { 'Content-Type': 'text/plain' });
-          res.end('Server Error');
-        }
-      });
-      stream.pipe(res);
+    res.writeHead(200, { 'Content-Type': contentType });
+    const stream = fs.createReadStream(filePath);
+    stream.on('error', () => {
+      if (!res.headersSent) {
+        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.end('Server Error');
+      }
     });
+    stream.pipe(res);
   });
+}
+
+function createServer() {
+  return http.createServer(requestHandler);
 }
 
 function startServer(port) {
@@ -99,4 +106,10 @@ function startServer(port) {
   });
 }
 
-startServer(DEFAULT_PORT);
+// Export requestHandler for Vercel / Serverless hosting
+module.exports = requestHandler;
+
+// Only bind port if executed directly
+if (require.main === module) {
+  startServer(DEFAULT_PORT);
+}
