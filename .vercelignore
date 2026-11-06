@@ -1,0 +1,10 @@
+# Ignore server and desktop files for pure static Vercel deployment
+local-server.js
+main.js
+dist/
+node_modules/
+*.bat
+.agents/
+AGENTS.md
+DESIGN.md
+Flyers and QR/

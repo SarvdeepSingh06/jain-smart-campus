@@ -6,7 +6,7 @@
   "scripts": {
     "build": "echo 'Static assets ready'",
     "start": "electron .",
-    "serve": "node server.js",
+    "serve": "node local-server.js",
     "pack": "npx electron-packager . JAINSmartCampus --platform=win32 --arch=x64 --out=dist --overwrite --icon=icon.svg"
   },
   "keywords": [
