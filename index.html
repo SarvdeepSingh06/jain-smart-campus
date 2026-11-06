@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#315C49">
+  <meta name="description" content="JAIN Smart Campus — Modern campus support and reporting platform. Report lost belongings and campus maintenance issues easily.">
+
+  <!-- PWA & Mobile Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="JAIN Smart Campus">
+
+  <title>JAIN Smart Campus — Campus Support &amp; Reporting</title>
+
+  <!-- Typography: Inter Sans-serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header / Topbar Navigation -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#" class="brand" onclick="showView('viewHome'); return false;" aria-label="JAIN Smart Campus Home">
+          <div class="brand-logo" aria-hidden="true">
+            <img src="icon.svg" alt="JAIN Logo">
+          </div>
+          <div class="brand-info">
+            <span class="brand-title">JAIN Smart Campus</span>
+            <span class="brand-badge">Reporting Portal</span>
+          </div>
+        </a>
+
+        <div class="topbar-actions">
+          <button type="button" id="openScannerBtn" class="scanner-btn" onclick="openScannerModal()" title="Scan Campus QR Code" aria-label="Scan Campus QR Code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="10" height="10" x="7" y="7" rx="1"/></svg>
+            <span class="scanner-btn-label">Scan QR</span>
+          </button>
+          <button id="installAppBtn" class="install-btn" style="display:none;" title="Install application on device">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Install</span>
+          </button>
+          <button id="themeToggleBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">
+            <!-- Rendered dynamically by setupTheme() with Lucide SVG -->
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+      <!-- VIEW 1: FOCUSED HOMEPAGE -->
+      <section id="viewHome" class="view-panel active">
+        <!-- Hero Introduction -->
+        <div class="hero">
+          <h1 class="hero-heading">A better campus starts here.</h1>
+          <p class="hero-subtext">Report lost belongings or campus issues. We'll help get them sorted.</p>
+        </div>
+
+        <!-- Two Primary Service Cards -->
+        <div class="service-cards-grid">
+          <!-- Card 1: Lost@JAIN -->
+          <article class="service-card" onclick="openLostSelection()" tabindex="0" role="button" aria-label="Get started with Lost at JAIN">
+            <div class="service-card-body">
+              <div class="service-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/><circle cx="18.5" cy="15.5" r="2.5"/><path d="M20.27 17.27 22 19"/></svg>
+              </div>
+              <h2 class="service-title">Lost@JAIN</h2>
+              <p class="service-desc">Lost something? Found something? Help reunite belongings with their owners.</p>
+            </div>
+            <div class="service-card-footer">
+              <span class="service-cta">
+                Get started
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </div>
+          </article>
+
+          <!-- Card 2: FIX-IT QR -->
+          <article class="service-card" onclick="openMaintenance()" tabindex="0" role="button" aria-label="Report an issue with FIX-IT QR">
+            <div class="service-card-body">
+              <div class="service-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <h2 class="service-title">FIX-IT QR</h2>
+              <p class="service-desc">Something broken? Report maintenance issues around campus.</p>
+            </div>
+            <div class="service-card-footer">
+              <span class="service-cta">
+                Report an issue
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- VIEW 2: Lost@JAIN SELECTION INTERFACE -->
+      <section id="viewLostChoice" class="view-panel" style="display:none;">
+        <div class="subview-container">
+          <button type="button" class="back-link-btn" onclick="showView('viewHome')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span>Back to services</span>
+          </button>
+
+          <div class="view-header">
+            <h2 class="view-title">Lost@JAIN</h2>
+            <p class="view-subtitle">Select an option to proceed with your campus report</p>
+          </div>
+
+          <div class="choice-cards-grid">
+            <!-- Choice 1: I lost something -->
+            <div class="choice-card" onclick="openLostForm('lost')" tabindex="0" role="button" aria-label="I lost something">
+              <div class="choice-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              </div>
+              <h3 class="choice-title">I lost something</h3>
+              <p class="choice-desc">Report an item you misplaced on campus so community members and staff can help locate it.</p>
+              <div class="choice-footer">
+                <span class="choice-action">
+                  Report lost item
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Choice 2: I found something -->
+            <div class="choice-card" onclick="openLostForm('found')" tabindex="0" role="button" aria-label="I found something">
+              <div class="choice-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><polyline points="21 8 21 16 12 21 3 16 3 8"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></svg>
+              </div>
+              <h3 class="choice-title">I found something</h3>
+              <p class="choice-desc">Report an item you discovered on campus so the rightful owner can safely reclaim it.</p>
+              <div class="choice-footer">
+                <span class="choice-action">
+                  Report found item
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: Lost@JAIN REPORTING FORM (Differentiated Lost & Found Workflows) -->
+      <section id="viewLostForm" class="view-panel" style="display:none;">
+        <div class="subview-container">
+          <button type="button" class="back-link-btn" onclick="showView('viewLostChoice')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span>Back to choices</span>
+          </button>
+
+          <div class="form-card" id="lostForm">
+            <div class="form-card-header">
+              <span class="form-badge" id="lostFormBadge">Lost Item Report</span>
+              <h2 class="form-title" id="lostFormTitle">Report a lost belonging</h2>
+              <p class="form-subtitle" id="lostFormSubtitle">Provide details to help campus staff and finders identify your item.</p>
+
+              <!-- Segmented Switcher (Preserves entered values seamlessly) -->
+              <div class="type-segment" role="group" aria-label="Report type selection">
+                <button type="button" class="segment-btn active" id="segLost" onclick="setLostType('I LOST SOMETHING')">
+                  I lost something
+                </button>
+                <button type="button" class="segment-btn" id="segFound" onclick="setLostType('I FOUND SOMETHING')">
+                  I found something
+                </button>
+              </div>
+            </div>
+
+            <!-- Form with Contextual Fields -->
+            <form id="lostFormElement" onsubmit="submitLost(event)">
+              <!-- QR Context Banner (When pre-filled from QR Scan) -->
+              <div id="lostQrBanner" class="qr-context-banner" style="display:none;"></div>
+
+              <select id="lType" style="display:none;" required>
+                <option value="I LOST SOMETHING">I LOST SOMETHING</option>
+                <option value="I FOUND SOMETHING">I FOUND SOMETHING</option>
+              </select>
+
+              <div class="form-grid">
+                <!-- Shared: Item Category -->
+                <div class="field">
+                  <label for="lCategory">Item Category</label>
+                  <select id="lCategory" required>
+                    <option value="">Select category</option>
+                    <option>Electronics</option>
+                    <option>Wallet / Card holder</option>
+                    <option>Keys</option>
+                    <option>Books / Notes</option>
+                    <option>Clothing</option>
+                    <option>Water bottle</option>
+                    <option>Accessories</option>
+                    <option>Bag / Backpack</option>
+                    <option>ID Card / Documents</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <!-- Shared: Location (Dynamic Label) -->
+                <div class="field">
+                  <label for="lLocation" id="lLocationLabel">Where was it last seen?</label>
+                  <input id="lLocation" placeholder="e.g. Library 2nd Floor, Cafeteria Table 4..." required>
+                </div>
+
+                <!-- Shared: Date & Time (Dynamic Label) -->
+                <div class="field">
+                  <label for="lDate" id="lDateLabel">Date &amp; approximate time last seen</label>
+                  <input id="lDate" type="datetime-local" required>
+                </div>
+
+                <!-- Optional Photo / Reference Image -->
+                <div class="field">
+                  <label for="lPhoto">Photo / Reference Image <span class="tag-optional">(Optional)</span></label>
+                  <div class="file-upload-box" onclick="document.getElementById('lPhoto').click()">
+                    <span class="file-upload-btn">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                      Choose file
+                    </span>
+                    <span class="file-name-preview" id="lPhotoName">No file selected</span>
+                  </div>
+                  <input type="file" id="lPhoto" accept="image/*" style="display:none;" onchange="handleFileSelect(this, 'lPhotoName')">
+                  <span class="field-helper" id="lPhotoHelper">Upload a photo of your item or similar reference model.</span>
+                </div>
+
+                <!-- Shared: Description of identifying features -->
+                <div class="field full">
+                  <label for="lDesc" id="lDescLabel">Description &amp; Identifying Features</label>
+                  <textarea id="lDesc" rows="4" placeholder="Describe identifying features such as brand, color, stickers, scratches, case, or distinct markings..." required></textarea>
+                </div>
+
+                <!-- LOST FLOW SPECIFIC: Contact Information with Privacy Guidance -->
+                <div id="lostSpecificFields" class="field full">
+                  <div class="field" style="margin-bottom:12px;">
+                    <label for="lContact">Your Contact Information <span style="font-weight:400; color:var(--text-secondary);">(Email or Phone)</span></label>
+                    <input id="lContact" placeholder="e.g. student.name@jainuniversity.ac.in or 9876543210" required>
+                  </div>
+                  <div class="notice-callout privacy-callout">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <span><strong>Privacy Guarantee:</strong> Your contact details are stored securely and never published on public boards. They are strictly used by campus security and staff to contact you if a match is found.</span>
+                  </div>
+                </div>
+
+                <!-- FOUND FLOW SPECIFIC: Current Storage / Handover Spot & Verification Warning -->
+                <div id="foundSpecificFields" class="field full" style="display:none;">
+                  <div class="form-grid" style="margin-bottom:12px;">
+                    <div class="field">
+                      <label for="fHandover">Current Handover / Storage Location</label>
+                      <select id="fHandover">
+                        <option value="">Select handover location</option>
+                        <option>Campus Security Office (Main Gate)</option>
+                        <option>Library Front Circulation Desk</option>
+                        <option>Classroom Block A Reception</option>
+                        <option>Classroom Block B Admin Office</option>
+                        <option>Cafeteria Manager Counter</option>
+                        <option>Still with finder (will deposit with campus security today)</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label for="fContact">Finder Contact Details <span class="tag-optional">(Optional)</span></label>
+                      <input id="fContact" placeholder="e.g. phone or email in case staff need clarification">
+                    </div>
+                  </div>
+                  <div class="notice-callout">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <span><strong>Ownership Verification Required:</strong> For student safety, sensitive identifying numbers (e.g. laptop serials, wallet card numbers) are withheld. Anyone claiming this item must verify unique features to security before handover.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accurate Local Registry Note (No false cloud sync claims) -->
+              <div class="notice-callout offline-accurate-callout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                <span>Reports are saved securely in this device's campus registry for review and helpdesk inquiries.</span>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-primary" id="lostSubmitBtn" type="submit">Submit Report</button>
+                <button class="btn btn-secondary" type="button" onclick="showView('viewLostChoice')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: FIX-IT QR MAINTENANCE FORM (With Precise Location, Urgency & Photo) -->
+      <section id="viewMaintForm" class="view-panel" style="display:none;">
+        <div class="subview-container">
+          <button type="button" class="back-link-btn" onclick="showView('viewHome')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <span>Back to services</span>
+          </button>
+
+          <div class="form-card" id="maintenanceForm">
+            <div class="form-card-header">
+              <span class="form-badge">Campus Maintenance</span>
+              <h2 class="form-title">Report a maintenance issue</h2>
+              <p class="form-subtitle">Let facility teams know about damaged equipment or classroom maintenance needs.</p>
+            </div>
+
+            <form id="maintFormElement" onsubmit="submitMaintenance(event)">
+              <!-- QR Context Banner (When pre-filled from QR Scan) -->
+              <div id="maintQrBanner" class="qr-context-banner" style="display:none;"></div>
+
+              <div class="form-grid">
+                <!-- Facility / Area -->
+                <div class="field">
+                  <label for="mLocation">Campus Area / Building</label>
+                  <select id="mLocation" required>
+                    <option value="">Select location</option>
+                    <option>Classroom Block A</option>
+                    <option>Classroom Block B</option>
+                    <option>Library</option>
+                    <option>Lab Complex</option>
+                    <option>Cafeteria</option>
+                    <option>Hostel Blocks</option>
+                    <option>Sports &amp; Gym Area</option>
+                    <option>Auditorium</option>
+                  </select>
+                </div>
+
+                <!-- Precise Room & Spot -->
+                <div class="field">
+                  <label for="mRoom">Floor, Room &amp; Spot <span style="font-weight:400; color:var(--text-secondary);">(Precise Location)</span></label>
+                  <input id="mRoom" placeholder="e.g. 2nd Floor, Room A-204, near window" required>
+                </div>
+
+                <!-- Issue Category -->
+                <div class="field">
+                  <label for="mIssue">Issue Type</label>
+                  <select id="mIssue" required>
+                    <option value="">Select issue</option>
+                    <option>Desk</option>
+                    <option>Chair</option>
+                    <option>Light / Electrical Tube</option>
+                    <option>Fan / Ventilation</option>
+                    <option>Switch / Plug Socket</option>
+                    <option>Projector / AV Cable</option>
+                    <option>Water / Plumbing Leak</option>
+                    <option>Air Conditioning</option>
+                    <option>Door / Window Lock</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <!-- Urgency Selector with Guidance -->
+                <div class="field">
+                  <label for="mUrgency">Urgency Level <span class="tag-optional">(Optional)</span></label>
+                  <select id="mUrgency">
+                    <option value="Standard">Standard — Normal repair during maintenance rounds</option>
+                    <option value="Low">Low — Minor cosmetic or non-critical convenience</option>
+                    <option value="Medium">Medium — Active classroom defect needing attention</option>
+                    <option value="High">High — Immediate safety hazard or class disruption</option>
+                  </select>
+                  <span class="field-helper">Select <strong>High</strong> only for active hazards (exposed wires, water leaks) or major class disruption.</span>
+                </div>
+
+                <!-- Description -->
+                <div class="field full">
+                  <label for="mDesc">Issue Description</label>
+                  <textarea id="mDesc" rows="4" placeholder="e.g. 2nd row ceiling fan is rattling loudly at high speed, projector HDMI port in Room A-204 is loose..." required></textarea>
+                </div>
+
+                <!-- Photo Attachment (Strongly Encouraged) -->
+                <div class="field full">
+                  <label for="mPhoto">Photo Attachment <span class="tag-optional" style="color:var(--accent-primary); font-weight:600;">(Optional — Strongly Encouraged)</span></label>
+                  <div class="file-upload-box" onclick="document.getElementById('mPhoto').click()">
+                    <span class="file-upload-btn">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                      Attach photo
+                    </span>
+                    <span class="file-name-preview" id="mPhotoName">No photo attached</span>
+                  </div>
+                  <input type="file" id="mPhoto" accept="image/*" style="display:none;" onchange="handleFileSelect(this, 'mPhotoName')">
+                  <span class="field-helper">A quick photo helps maintenance staff bring the exact parts and tools on their first visit.</span>
+                </div>
+              </div>
+
+              <!-- Accurate Local Registry Note (No false cloud sync claims) -->
+              <div class="notice-callout offline-accurate-callout">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                <span>Reports are logged directly into this device's campus registry. High-urgency safety hazards are prioritized during daily maintenance rounds.</span>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn btn-primary" id="maintSubmitBtn" type="submit">Submit Maintenance Ticket</button>
+                <button class="btn btn-secondary" type="button" onclick="showView('viewHome')">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: CONFIRMATION STATE (Clear Success, Reference Number & Honest Next Steps) -->
+      <section id="viewConfirmation" class="view-panel" style="display:none;">
+        <div class="subview-container">
+          <div class="conf-card">
+            <div class="conf-hero">
+              <div class="conf-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div>
+                <span class="form-badge" id="confTypeBadge">Report Submitted</span>
+                <h2 class="conf-title" id="confTitle">Report Logged Successfully</h2>
+                <p class="conf-sub">Your submission has been securely recorded in the JAIN Smart Campus registry.</p>
+              </div>
+            </div>
+
+            <!-- Prominent Reference ID Box -->
+            <div class="conf-ref-box">
+              <div>
+                <div class="conf-ref-label">Report Reference Number</div>
+                <div class="conf-ref-id" id="confRefId">LOST-00000</div>
+              </div>
+              <button type="button" class="btn-sm" onclick="copyRefId()" id="copyRefBtn" title="Copy reference code">
+                Copy Reference ID
+              </button>
+            </div>
+
+            <!-- Concise Summary Table -->
+            <div class="conf-summary-card">
+              <div class="conf-summary-header">Submission Summary</div>
+              <div class="conf-summary-row">
+                <span class="conf-summary-label">Category / Issue</span>
+                <span class="conf-summary-value" id="confCategory">—</span>
+              </div>
+              <div class="conf-summary-row">
+                <span class="conf-summary-label">Location</span>
+                <span class="conf-summary-value" id="confLocation">—</span>
+              </div>
+              <div class="conf-summary-row">
+                <span class="conf-summary-label">Logged At</span>
+                <span class="conf-summary-value" id="confDate">—</span>
+              </div>
+              <div class="conf-summary-row" id="confExtraRow">
+                <span class="conf-summary-label" id="confExtraLabel">Details</span>
+                <span class="conf-summary-value" id="confExtraVal">—</span>
+              </div>
+              <div class="conf-summary-row" id="confPhotoRow" style="display:none;">
+                <span class="conf-summary-label">Attachment</span>
+                <span class="conf-summary-value" id="confPhotoVal">—</span>
+              </div>
+              <div class="conf-summary-row">
+                <span class="conf-summary-label">Description</span>
+                <span class="conf-summary-value" id="confDesc">—</span>
+              </div>
+            </div>
+
+            <!-- Honest "What Happens Next" Section -->
+            <div class="next-steps-card">
+              <h4>What happens next?</h4>
+              <ul class="next-steps-list" id="confNextSteps">
+                <!-- Dynamically populated with accurate, honest guidance -->
+              </ul>
+            </div>
+
+            <!-- Confirmation Action Buttons -->
+            <div class="conf-actions">
+              <button type="button" class="btn btn-primary" onclick="showView('viewHome')">
+                Back to Home
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="openActivityFromConfirmation()">
+                View in Campus Registry
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Anchor for smooth scrolling -->
+      <div id="forms-anchor"></div>
+
+      <!-- Campus Activity & Verification Registry (Kept in DOM, toggled cleanly via footer) -->
+      <section id="activitySection" class="activity-drawer" style="display:none;">
+        <div class="activity-drawer-inner">
+          <div class="activity-drawer-header">
+            <div>
+              <h3 class="activity-title">Campus Activity Registry</h3>
+              <p class="activity-sub">Track active maintenance tickets and search lost &amp; found listings.</p>
+            </div>
+            <button type="button" class="close-drawer-btn" onclick="toggleActivity()" title="Close registry" aria-label="Close registry">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Counters for renderAll() -->
+          <div class="activity-stats-bar">
+            <div class="stat-pill"><b>Maintenance:</b> <span id="issueCount">0</span></div>
+            <div class="stat-pill"><b>Lost &amp; Found:</b> <span id="foundCount">0</span></div>
+            <div class="stat-pill"><b>Fixed:</b> <span id="fixedCount">0</span></div>
+          </div>
+
+          <div class="track-grid">
+            <!-- Maintenance Tickets -->
+            <div class="track-card">
+              <h4>Active Maintenance Tickets</h4>
+              <div id="ticketsList"></div>
+            </div>
+
+            <!-- Lost & Found Board -->
+            <div class="track-card">
+              <h4>Lost &amp; Found Registry</h4>
+              <div class="search-bar">
+                <input id="searchItems" placeholder="Search category, location, or description..." oninput="renderLostItems()">
+              </div>
+              <div id="itemsList"></div>
+            </div>
+          </div>
+
+          <!-- QR Posters & Location Simulator -->
+          <div class="qr-management-card">
+            <h4>Campus QR Codes &amp; Posters</h4>
+            <p>Generate printable stickers or test scanning across all 6 campus zones:</p>
+            <div style="margin-top:12px;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="openScannerModal('locations')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/><path d="M7 17h.01"/><path d="M17 17h.01"/></svg>
+                <span>View &amp; Test 6 Campus QRs</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile-Optimized QR Scanner & Campus QR Modal -->
+    <div id="scannerModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="scannerTitle">
+      <div class="scanner-modal-card">
+        <!-- Scanner Top Bar -->
+        <div class="scanner-header">
+          <div class="scanner-title-wrap">
+            <div class="scanner-icon-bubble" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="10" height="10" x="7" y="7" rx="1"/></svg>
+            </div>
+            <div>
+              <h3 id="scannerTitle" class="scanner-modal-heading">Campus QR Scanner</h3>
+              <p class="scanner-modal-sub">Scan stickers on campus desks, doors &amp; equipment</p>
+            </div>
+          </div>
+          <div class="scanner-header-actions">
+            <button type="button" id="flipCameraBtn" class="scanner-tool-btn" onclick="flipCamera()" title="Switch camera" aria-label="Switch camera" style="display:none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/></svg>
+            </button>
+            <button type="button" class="scanner-tool-btn" onclick="closeScannerModal()" title="Close scanner" aria-label="Close scanner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Scanner Mode Switcher -->
+        <div class="scanner-tabs" role="tablist">
+          <button type="button" id="tabCameraBtn" class="scanner-tab active" role="tab" aria-selected="true" onclick="switchScannerTab('camera')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <span>Live Camera</span>
+          </button>
+          <button type="button" id="tabLocationsBtn" class="scanner-tab" role="tab" aria-selected="false" onclick="switchScannerTab('locations')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h.01"/><path d="M17 7h.01"/><path d="M7 17h.01"/><path d="M17 17h.01"/></svg>
+            <span>Campus QRs (6 Locations)</span>
+          </button>
+        </div>
+
+        <!-- TAB 1: LIVE CAMERA SCANNER -->
+        <div id="scannerCameraTab" class="scanner-tab-view active">
+          <div class="viewfinder-wrap">
+            <video id="scannerVideo" playsinline muted autoplay></video>
+            <canvas id="scannerCanvas" style="display:none;"></canvas>
+
+            <!-- Scanning Reticle / Overlay -->
+            <div class="viewfinder-reticle" aria-hidden="true">
+              <div class="reticle-target">
+                <span class="corner tl"></span>
+                <span class="corner tr"></span>
+                <span class="corner bl"></span>
+                <span class="corner br"></span>
+                <div class="scan-laser"></div>
+              </div>
+            </div>
+
+            <!-- Viewfinder Prompt -->
+            <div id="scannerNotice" class="viewfinder-caption">
+              <span>Align QR code within frame</span>
+            </div>
+          </div>
+
+          <!-- Camera Status & Secondary Actions -->
+          <div class="scanner-footer-actions">
+            <label class="btn btn-secondary btn-sm" for="qrImageUpload" style="cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+              <span>Scan from image</span>
+            </label>
+            <input type="file" id="qrImageUpload" accept="image/*" style="display:none;" onchange="handleQRImageUpload(event)">
+
+            <button type="button" class="btn btn-link btn-sm" onclick="switchScannerTab('locations')">
+              Or test with 6 dummy campus QRs &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 2: 6 CAMPUS DUMMY LOCATIONS & QRS -->
+        <div id="scannerLocationsTab" class="scanner-tab-view" style="display:none;">
+          <div class="locations-filter-row">
+            <span class="locations-filter-text">Select service to generate:</span>
+            <div class="service-pill-toggle">
+              <button type="button" class="pill-toggle-btn active" id="qrServiceFixitBtn" onclick="setQRPosterService('fixit')">
+                FIX-IT QR
+              </button>
+              <button type="button" class="pill-toggle-btn" id="qrServiceLostBtn" onclick="setQRPosterService('lost')">
+                Lost@JAIN
+              </button>
+            </div>
+          </div>
+
+          <p class="locations-helper-note">
+            Tap <strong>"⚡ Simulate Scan"</strong> on any location to test auto-filling instantly, or scan the QR directly with your phone camera:
+          </p>
+
+          <div id="locationsQrGrid" class="locations-qr-grid">
+            <!-- Populated dynamically by renderCampusLocationsQR() -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Verification Modal -->
+    <div id="verificationModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="verifyTitle">
+      <div class="modal-card">
+        <h3 id="verifyTitle">Verify Item Ownership</h3>
+        <p>Item ID: <b id="verifyItemCode">JAIN-000</b>. Please state a hidden feature or unique detail to prove ownership before handover.</p>
+        <div class="field" style="margin-bottom:20px;">
+          <label for="verifyInput">Unique Ownership Detail</label>
+          <input id="verifyInput" placeholder="e.g. Scratched logo on back, green ribbon attached...">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeVerification()">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="confirmVerification()">Submit Request</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <!-- Footer (Restrained, does not compete with main actions) -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <span class="footer-text">JAIN Smart Campus &bull; Minimal Campus Reporting Platform</span>
+        <button type="button" id="toggleActivityBtn" class="footer-link-btn" onclick="toggleActivity()">
+          View campus activity registry &amp; verify items &rarr;
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- QR Code Generator & Scanner Libraries (Offline first) -->
+  <script src="qrcode.min.js"></script>
+  <script src="jsqr.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

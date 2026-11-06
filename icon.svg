@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#315C49" />
+      <stop offset="100%" stop-color="#213E31" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8EEE8" />
+      <stop offset="100%" stop-color="#C5D3C5" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGrad)" />
+
+  <!-- Inner Subtle Ring -->
+  <rect x="24" y="24" width="464" height="464" rx="90" fill="none" stroke="#ffffff" stroke-opacity="0.15" stroke-width="3" />
+
+  <!-- Shield / Campus Building Graphic -->
+  <g filter="url(#shadow)" transform="translate(106, 80)">
+    <!-- Roof / Crest -->
+    <path d="M 150 20 L 270 110 L 30 110 Z" fill="#ffffff" />
+    <path d="M 150 40 L 250 110 L 50 110 Z" fill="#E8EEE8" />
+    
+    <!-- Columns -->
+    <rect x="50" y="125" width="30" height="140" rx="6" fill="#ffffff" />
+    <rect x="100" y="125" width="30" height="140" rx="6" fill="#ffffff" />
+    <rect x="170" y="125" width="30" height="140" rx="6" fill="#ffffff" />
+    <rect x="220" y="125" width="30" height="140" rx="6" fill="#ffffff" />
+    
+    <!-- Base -->
+    <rect x="30" y="265" width="240" height="30" rx="8" fill="#ffffff" />
+    <rect x="15" y="295" width="270" height="25" rx="8" fill="#E8EEE8" />
+
+    <!-- QR Badge Overlay -->
+    <g transform="translate(190, 180)">
+      <rect width="100" height="100" rx="20" fill="url(#accentGrad)" />
+      <rect x="12" y="12" width="30" height="30" rx="6" fill="#252B27" />
+      <rect x="20" y="20" width="14" height="14" rx="2" fill="#E8EEE8" />
+      
+      <rect x="58" y="12" width="30" height="30" rx="6" fill="#252B27" />
+      <rect x="66" y="20" width="14" height="14" rx="2" fill="#E8EEE8" />
+      
+      <rect x="12" y="58" width="30" height="30" rx="6" fill="#252B27" />
+      <rect x="20" y="66" width="14" height="14" rx="2" fill="#E8EEE8" />
+
+      <rect x="58" y="58" width="14" height="14" rx="3" fill="#252B27" />
+      <rect x="74" y="74" width="14" height="14" rx="3" fill="#252B27" />
+    </g>
+  </g>
+</svg>
