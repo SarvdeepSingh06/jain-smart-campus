@@ -61,6 +61,12 @@
         <div class="hero">
           <h1 class="hero-heading">A better campus starts here.</h1>
           <p class="hero-subtext">Report lost belongings or campus issues. We'll help get them sorted.</p>
+          <div style="margin-top:16px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="openScannerModal('camera')" style="display:inline-flex; align-items:center; gap:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="10" height="10" x="7" y="7" rx="1"/></svg>
+              <span>Scan Campus QR Sticker</span>
+            </button>
+          </div>
         </div>
 
         <!-- Two Primary Service Cards -->
@@ -177,6 +183,17 @@
             <form id="lostFormElement" onsubmit="submitLost(event)">
               <!-- QR Context Banner (When pre-filled from QR Scan) -->
               <div id="lostQrBanner" class="qr-context-banner" style="display:none;"></div>
+
+              <!-- Quick QR Scan Trigger Bar -->
+              <div class="qr-scan-trigger-bar">
+                <span class="qr-scan-trigger-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="10" height="10" x="7" y="7" rx="1"/></svg>
+                  Found or lost near a campus QR station?
+                </span>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="openScannerModal('camera')">
+                  📷 Scan Campus QR
+                </button>
+              </div>
 
               <select id="lType" style="display:none;" required>
                 <option value="I LOST SOMETHING">I LOST SOMETHING</option>
@@ -306,6 +323,17 @@
             <form id="maintFormElement" onsubmit="submitMaintenance(event)">
               <!-- QR Context Banner (When pre-filled from QR Scan) -->
               <div id="maintQrBanner" class="qr-context-banner" style="display:none;"></div>
+
+              <!-- Quick QR Scan Trigger Bar -->
+              <div class="qr-scan-trigger-bar">
+                <span class="qr-scan-trigger-text">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="10" height="10" x="7" y="7" rx="1"/></svg>
+                  Have a desk or equipment QR sticker nearby?
+                </span>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="openScannerModal('camera')">
+                  📷 Scan QR Sticker
+                </button>
+              </div>
 
               <div class="form-grid">
                 <!-- Facility / Area -->
@@ -614,8 +642,23 @@
             </div>
           </div>
 
-          <p class="locations-helper-note">
-            Tap <strong>"⚡ Simulate Scan"</strong> on any location to test auto-filling instantly, or scan the QR directly with your phone camera:
+          <div class="locations-filter-row" style="margin-top:6px; padding-top:8px; border-top:1px dashed var(--border-color);">
+            <span class="locations-filter-text">Scan target URL (for phone camera):</span>
+            <div class="service-pill-toggle">
+              <button type="button" class="pill-toggle-btn active" id="qrTarget_public" onclick="setQRTargetMode('public')" title="Recommended: Opens directly on any phone camera">
+                🌐 Public Cloud (Any Phone)
+              </button>
+              <button type="button" class="pill-toggle-btn" id="qrTarget_wifi" onclick="setQRTargetMode('wifi')" title="Opens on phones connected to the same Wi-Fi">
+                📶 Local Wi-Fi
+              </button>
+              <button type="button" class="pill-toggle-btn" id="qrTarget_current" onclick="setQRTargetMode('current')" title="Current localhost browser">
+                💻 Localhost
+              </button>
+            </div>
+          </div>
+
+          <p class="locations-helper-note" style="margin-top:10px;">
+            Tap any QR or <strong>"⚡ Open Form"</strong> to test immediately, or point your phone's camera at the QR code on screen:
           </p>
 
           <div id="locationsQrGrid" class="locations-qr-grid">

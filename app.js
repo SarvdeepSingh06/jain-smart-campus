@@ -791,9 +791,49 @@ let scannerAnimFrame = null;
 let currentCameraFacing = 'environment';
 let isScanningActive = false;
 
+// Hosted live URL for mobile phones + Localhost fallbacks
+const PUBLIC_HOSTED_URL = 'https://sarvdeepsingh06.github.io/jain-smart-campus/';
+const LOCAL_WIFI_URL = 'http://172.20.133.214:3000/';
+let qrTargetMode = 'public'; // 'public' | 'wifi' | 'current'
+
+// Determine the base URL for QR codes
+function getQRBaseUrl() {
+  if (qrTargetMode === 'public') {
+    return PUBLIC_HOSTED_URL;
+  } else if (qrTargetMode === 'wifi') {
+    return LOCAL_WIFI_URL;
+  } else {
+    return window.location.origin + window.location.pathname;
+  }
+}
+
+// Switch QR Target URL mode (Public Cloud vs Wi-Fi vs Localhost)
+function setQRTargetMode(mode) {
+  qrTargetMode = mode;
+  const modes = ['public', 'wifi', 'current'];
+  modes.forEach((m) => {
+    const btn = document.getElementById(`qrTarget_${m}`);
+    if (btn) {
+      if (m === mode) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
+  });
+
+  const modeLabels = {
+    public: 'Public Cloud (Opens on any phone camera)',
+    wifi: 'Local Wi-Fi (172.20.133.214)',
+    current: 'Localhost (Current device only)'
+  };
+  toast(`QR links updated to ${modeLabels[mode]}`, '🌐');
+  renderCampusLocationsQR();
+}
+
 // Construct full QR URL with campus location parameters
 function buildQRUrl(loc, service) {
-  const base = window.location.origin + window.location.pathname;
+  const base = getQRBaseUrl();
   const p = new URLSearchParams();
   p.set('service', service);
   p.set('code', loc.id);
@@ -809,7 +849,8 @@ function buildQRUrl(loc, service) {
     p.set('handover', loc.lost.handover);
   }
 
-  return `${base}?${p.toString()}`;
+  const separator = base.includes('?') ? '&' : '?';
+  return `${base}${separator}${p.toString()}`;
 }
 
 // Render the 6 Campus Location QR cards with live QRs
@@ -852,20 +893,24 @@ function renderCampusLocationsQR() {
         <span class="loc-card-badge">${serviceLabel}</span>
       </div>
 
-      <div class="loc-qr-preview-box" id="${boxId}" title="Scan with mobile camera">
+      <div class="loc-qr-preview-box clickable" id="${boxId}" onclick="openLocationFromQR('${loc.id}', '${activePosterService}')" title="Click to open this pre-filled form in app">
         <!-- Rendered by QRCode below -->
       </div>
+      <div class="qr-preview-hint">Tap QR to open in app &bull; or scan with phone camera</div>
 
-      <div class="loc-card-params">
+      <div class="loc-card-params" style="margin-top:8px;">
         ${paramTags}
       </div>
 
       <div class="loc-card-actions">
-        <button type="button" class="btn btn-primary btn-sm" onclick="simulateLocationScan('${loc.id}', '${activePosterService}')">
-          ⚡ Simulate Scan
+        <button type="button" class="btn btn-primary btn-sm" onclick="openLocationFromQR('${loc.id}', '${activePosterService}')" title="Open and pre-fill form immediately">
+          ⚡ Open Form
         </button>
+        <a href="${targetUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" title="Open direct URL in a new browser tab">
+          🔗 New Tab
+        </a>
         <button type="button" class="btn btn-secondary btn-sm" onclick="copyLocationUrl('${loc.id}', '${activePosterService}')" title="Copy QR link">
-          Copy Link
+          Copy
         </button>
       </div>
     `;
@@ -892,6 +937,16 @@ function renderCampusLocationsQR() {
       qrBox.innerHTML = `<span style="font-size:11px; color:var(--text-secondary);">[QR Code: ${loc.id}]</span>`;
     }
   });
+}
+
+// 1-Click action to open the location form from QR card or clicking the QR preview
+function openLocationFromQR(locId, service) {
+  const loc = CAMPUS_LOCATIONS.find((l) => l.id === locId);
+  if (!loc) return;
+
+  const url = buildQRUrl(loc, service);
+  closeScannerModal();
+  handleScannedData(url);
 }
 
 function setQRPosterService(service) {
