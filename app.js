@@ -799,6 +799,10 @@ let qrTargetMode = 'public'; // 'public' | 'wifi' | 'current'
 // Determine the base URL for QR codes
 function getQRBaseUrl() {
   if (qrTargetMode === 'public') {
+    // If running in browser on a live hosted domain (Vercel, custom domain, GitHub Pages)
+    if (typeof window !== 'undefined' && window.location.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      return window.location.origin + window.location.pathname;
+    }
     return PUBLIC_HOSTED_URL;
   } else if (qrTargetMode === 'wifi') {
     return LOCAL_WIFI_URL;

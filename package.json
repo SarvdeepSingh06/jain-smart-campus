@@ -2,10 +2,9 @@
   "name": "jain-smart-campus-app",
   "version": "1.0.0",
   "description": "JAIN Smart Campus Desktop & PWA Application",
-  "main": "main.js",
   "scripts": {
     "build": "echo 'Static assets ready'",
-    "start": "electron .",
+    "start": "electron main.js",
     "serve": "node local-server.js",
     "pack": "npx electron-packager . JAINSmartCampus --platform=win32 --arch=x64 --out=dist --overwrite --icon=icon.svg"
   },
