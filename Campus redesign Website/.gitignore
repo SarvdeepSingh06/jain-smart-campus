@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Production builds & archives
+dist/
+*.zip
+
+# System & OS artifacts
+Thumbs.db
+.DS_Store
+*.lnk
+
+# Environment & logs
+*.log
+.env
+.env.local

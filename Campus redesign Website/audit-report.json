@@ -1,0 +1,190 @@
+{
+  "viewports": [
+    {
+      "viewport": "Desktop-1920x1080",
+      "docWidth": 1506,
+      "winWidth": 1522,
+      "hasHorizontalOverflow": false,
+      "heroHeight": 850,
+      "heroVisibleRatio": "1.00",
+      "headingText": "A smarter,\nmore caring campus.",
+      "headingFontSize": "54px",
+      "cardMetrics": [
+        {
+          "title": "Lost@JAIN",
+          "width": 312,
+          "height": 223
+        },
+        {
+          "title": "Fix-it QR",
+          "width": 312,
+          "height": 223
+        }
+      ],
+      "infoStripVisible": true,
+      "infoStripHeight": 59,
+      "screenshot": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Design thinking\\DT website\\Campus redesign Website\\audit-screenshots\\Desktop-1920x1080.png"
+    },
+    {
+      "viewport": "Desktop-1440x900",
+      "docWidth": 1410,
+      "winWidth": 1426,
+      "hasHorizontalOverflow": false,
+      "heroHeight": 838,
+      "heroVisibleRatio": "1.00",
+      "headingText": "A smarter,\nmore caring campus.",
+      "headingFontSize": "54px",
+      "cardMetrics": [
+        {
+          "title": "Lost@JAIN",
+          "width": 312,
+          "height": 223
+        },
+        {
+          "title": "Fix-it QR",
+          "width": 312,
+          "height": 223
+        }
+      ],
+      "infoStripVisible": true,
+      "infoStripHeight": 59,
+      "screenshot": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Design thinking\\DT website\\Campus redesign Website\\audit-screenshots\\Desktop-1440x900.png"
+    },
+    {
+      "viewport": "Desktop-1366x768",
+      "docWidth": 1335,
+      "winWidth": 1352,
+      "hasHorizontalOverflow": false,
+      "heroHeight": 706,
+      "heroVisibleRatio": "1.00",
+      "headingText": "A smarter,\nmore caring campus.",
+      "headingFontSize": "44px",
+      "cardMetrics": [
+        {
+          "title": "Lost@JAIN",
+          "width": 312,
+          "height": 210
+        },
+        {
+          "title": "Fix-it QR",
+          "width": 312,
+          "height": 210
+        }
+      ],
+      "infoStripVisible": true,
+      "infoStripHeight": 55,
+      "screenshot": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Design thinking\\DT website\\Campus redesign Website\\audit-screenshots\\Desktop-1366x768.png"
+    },
+    {
+      "viewport": "Tablet-768x1024",
+      "docWidth": 738,
+      "winWidth": 754,
+      "hasHorizontalOverflow": false,
+      "heroHeight": 1017,
+      "heroVisibleRatio": "1.20",
+      "headingText": "A smarter,\nmore caring campus.",
+      "headingFontSize": "42px",
+      "cardMetrics": [
+        {
+          "title": "Lost@JAIN",
+          "width": 640,
+          "height": 203
+        },
+        {
+          "title": "Fix-it QR",
+          "width": 640,
+          "height": 203
+        }
+      ],
+      "infoStripVisible": true,
+      "infoStripHeight": 154,
+      "screenshot": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Design thinking\\DT website\\Campus redesign Website\\audit-screenshots\\Tablet-768x1024.png"
+    },
+    {
+      "viewport": "Mobile-430x932",
+      "docWidth": 399,
+      "winWidth": 416,
+      "hasHorizontalOverflow": false,
+      "heroHeight": 1042,
+      "heroVisibleRatio": "1.23",
+      "headingText": "A smarter,\nmore caring campus.",
+      "headingFontSize": "30px",
+      "cardMetrics": [
+        {
+          "title": "Lost@JAIN",
+          "width": 335,
+          "height": 203
+        },
+        {
+          "title": "Fix-it QR",
+          "width": 335,
+          "height": 223
+        }
+      ],
+      "infoStripVisible": true,
+      "infoStripHeight": 154,
+      "screenshot": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Design thinking\\DT website\\Campus redesign Website\\audit-screenshots\\Mobile-430x932.png"
+    },
+    {
+      "viewport": "Mobile-390x844",
+      "docWidth": 359,
+      "winWidth": 376,
+      "hasHorizontalOverflow": false,
+      "heroHeight": 1042,
+      "heroVisibleRatio": "1.33",
+      "headingText": "A smarter,\nmore caring campus.",
+      "headingFontSize": "30px",
+      "cardMetrics": [
+        {
+          "title": "Lost@JAIN",
+          "width": 295,
+          "height": 203
+        },
+        {
+          "title": "Fix-it QR",
+          "width": 295,
+          "height": 223
+        }
+      ],
+      "infoStripVisible": true,
+      "infoStripHeight": 154,
+      "screenshot": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Design thinking\\DT website\\Campus redesign Website\\audit-screenshots\\Mobile-390x844.png"
+    },
+    {
+      "viewport": "Mobile-360x800",
+      "docWidth": 330,
+      "winWidth": 346,
+      "hasHorizontalOverflow": false,
+      "heroHeight": 1086,
+      "heroVisibleRatio": "1.47",
+      "headingText": "A smarter,\nmore caring campus.",
+      "headingFontSize": "30px",
+      "cardMetrics": [
+        {
+          "title": "Lost@JAIN",
+          "width": 266,
+          "height": 223
+        },
+        {
+          "title": "Fix-it QR",
+          "width": 266,
+          "height": 223
+        }
+      ],
+      "infoStripVisible": true,
+      "infoStripHeight": 154,
+      "screenshot": "C:\\Users\\ASUS\\OneDrive\\Desktop\\Design thinking\\DT website\\Campus redesign Website\\audit-screenshots\\Mobile-360x800.png"
+    }
+  ],
+  "functional": {
+    "lostCardOpensFlow": true,
+    "lostBackReturnsHome": true,
+    "fixitOpensFlow": true,
+    "fixitBackReturnsHome": true,
+    "scannerModalOpens": true,
+    "scannerModalCloses": true,
+    "themeToggleWorks": true,
+    "imagesWithoutAlt": 0,
+    "buttonsWithoutLabel": 0
+  }
+}

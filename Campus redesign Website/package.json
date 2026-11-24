@@ -1,0 +1,23 @@
+{
+  "name": "jain-smart-campus-app",
+  "version": "1.0.0",
+  "description": "JAIN Smart Campus Desktop & PWA Application",
+  "scripts": {
+    "build": "echo 'Static assets ready'",
+    "audit": "electron verify-split-hero.js",
+    "start": "electron main.js",
+    "serve": "node local-server.js",
+    "pack": "npx electron-packager . JAINSmartCampus --platform=win32 --arch=x64 --out=dist --overwrite --icon=icon.svg"
+  },
+  "keywords": [
+    "pwa",
+    "desktop-app",
+    "smart-campus",
+    "electron"
+  ],
+  "author": "JAIN Campus Tech",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}
